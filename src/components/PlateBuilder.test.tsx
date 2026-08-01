@@ -28,4 +28,24 @@ describe('PlateBuilder', () => {
     expect(screen.getByTestId('category-fats')).toBeTruthy();
     expect(screen.getByTestId('category-tea_spice')).toBeTruthy();
   });
+
+  it('shows a disclaimer under the nutrient recommendation', () => {
+    render(<PlateBuilder phase="menstrual" symptoms={[]} />);
+    expect(
+      screen.getByText('Информация носит справочный характер. Не является медицинской рекомендацией.')
+    ).toBeTruthy();
+  });
+
+  it('hides non-vegetarian proteins when the profile says вегетарианство', () => {
+    render(<PlateBuilder phase="menstrual" symptoms={[]} dietaryRestrictions={['vegetarian']} />);
+    expect(screen.getByTestId('option-lentils')).toBeTruthy();
+    expect(screen.queryByTestId('option-beef_liver')).toBeNull();
+    expect(screen.queryByTestId('option-salmon')).toBeNull();
+  });
+
+  it('still shows every protein when no dietary restrictions are given', () => {
+    render(<PlateBuilder phase="menstrual" symptoms={[]} />);
+    expect(screen.getByTestId('option-beef_liver')).toBeTruthy();
+    expect(screen.getByTestId('option-salmon')).toBeTruthy();
+  });
 });

@@ -7,7 +7,11 @@ import type { FoodCategoryKey } from '@/content/knowledgeBase';
 interface PlateBuilderProps {
   phase: Phase;
   symptoms: SymptomTag[];
+  dietaryRestrictions?: string[];
 }
+
+const RECOMMENDATION_DISCLAIMER =
+  'Информация носит справочный характер. Не является медицинской рекомендацией.';
 
 const CATEGORY_LABELS: Record<FoodCategoryKey, string> = {
   protein: 'Белок',
@@ -16,8 +20,8 @@ const CATEGORY_LABELS: Record<FoodCategoryKey, string> = {
   tea_spice: 'Чай / специя',
 };
 
-export function PlateBuilder({ phase, symptoms }: PlateBuilderProps) {
-  const recommendation = getRecommendation(phase, symptoms);
+export function PlateBuilder({ phase, symptoms, dietaryRestrictions = [] }: PlateBuilderProps) {
+  const recommendation = getRecommendation(phase, symptoms, dietaryRestrictions);
   const [choices, setChoices] = useState<Record<string, string>>({});
 
   return (
@@ -54,6 +58,10 @@ export function PlateBuilder({ phase, symptoms }: PlateBuilderProps) {
           </View>
         </View>
       ))}
+
+      <Text testID="plate-disclaimer" className="text-xs text-gray-500 mt-1">
+        {RECOMMENDATION_DISCLAIMER}
+      </Text>
     </View>
   );
 }
