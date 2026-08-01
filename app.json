@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "Cycle & Nutrient Syncing",
+    "slug": "cycle-nutrient-syncing",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "scheme": "cyclesync",
+    "ios": { "bundleIdentifier": "com.iracloud.cyclesync", "supportsTablet": false },
+    "plugins": ["expo-router"]
+  }
+}
