@@ -3,7 +3,9 @@ import { useEffect, useMemo, useState } from 'react';
 import { PhaseCard } from '@/components/PhaseCard';
 import { SymptomCheckIn } from '@/components/SymptomCheckIn';
 import { PlateBuilder } from '@/components/PlateBuilder';
+import { PatternInsight } from '@/components/PatternInsight';
 import { calculatePhase } from '@/engine/phaseEngine';
+import { findPatterns } from '@/engine/patternRecognition';
 import { getRepositories } from '@/db/client';
 import { scheduleNotifications } from '@/notifications/scheduler';
 import type { SymptomTag } from '@/types';
@@ -25,6 +27,11 @@ export default function DashboardScreen() {
 
   const phaseResult = useMemo(() => calculatePhase(profile, cycleHistory), [profile, cycleHistory]);
 
+  const patterns = useMemo(
+    () => findPatterns(repos.symptomLog.getAll(), cycleHistory, profile),
+    [cycleHistory, profile]
+  );
+
   useEffect(() => {
     scheduleNotifications(phaseResult);
   }, [phaseResult.cycleDay, phaseResult.phase, phaseResult.isApproximate]);
@@ -39,6 +46,7 @@ export default function DashboardScreen() {
         <PhaseCard result={phaseResult} />
         <SymptomCheckIn selected={selectedSymptoms} onChange={setSelectedSymptoms} onSave={saveSymptoms} />
         <PlateBuilder phase={phaseResult.phase} symptoms={selectedSymptoms} />
+        <PatternInsight patterns={patterns} />
       </View>
     </ScrollView>
   );
