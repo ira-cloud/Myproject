@@ -23,6 +23,9 @@ function atHour(hour: number, daysFromNow = 0): Date {
 }
 
 export async function scheduleNotifications(result: PhaseResult): Promise<void> {
+  const { status } = await Notifications.requestPermissionsAsync();
+  if (status !== 'granted') return;
+
   await Notifications.cancelAllScheduledNotificationsAsync();
 
   await Notifications.scheduleNotificationAsync({

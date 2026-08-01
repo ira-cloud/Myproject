@@ -4,6 +4,7 @@ import { scheduleNotifications } from '@/notifications/scheduler';
 jest.mock('expo-notifications', () => ({
   scheduleNotificationAsync: jest.fn(),
   cancelAllScheduledNotificationsAsync: jest.fn(),
+  requestPermissionsAsync: jest.fn().mockResolvedValue({ status: 'granted' }),
 }));
 
 describe('scheduleNotifications', () => {
@@ -39,5 +40,12 @@ describe('scheduleNotifications', () => {
     const calls = (Notifications.scheduleNotificationAsync as jest.Mock).mock.calls;
     const titles = calls.map((c) => c[0].content.title);
     expect(titles).not.toContain('Скоро смена фазы');
+  });
+
+  it('returns early without scheduling when notification permissions are denied', async () => {
+    (Notifications.requestPermissionsAsync as jest.Mock).mockResolvedValueOnce({ status: 'denied' });
+    await scheduleNotifications({ cycleDay: 14, phase: 'ovulatory', isApproximate: false });
+    expect(Notifications.scheduleNotificationAsync).not.toHaveBeenCalled();
+    expect(Notifications.cancelAllScheduledNotificationsAsync).not.toHaveBeenCalled();
   });
 });
