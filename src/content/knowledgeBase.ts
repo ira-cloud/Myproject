@@ -56,7 +56,7 @@ export const KNOWLEDGE_BASE: Record<Phase, PhaseContent> = {
       ],
       fats: [
         { id: 'flaxseed', emoji: '🌱', name: 'Семена льна', isLocal: true },
-        { id: 'walnuts', emoji: '🌰', name: 'Грецкие орехи', isLocal: true },
+        { id: 'almonds', emoji: '🌰', name: 'Миндаль', isLocal: false },
       ],
       tea_spice: [
         { id: 'green_tea', emoji: '🍵', name: 'Зелёный чай', isLocal: false },
@@ -71,7 +71,7 @@ export const KNOWLEDGE_BASE: Record<Phase, PhaseContent> = {
     categories: {
       protein: [
         { id: 'white_fish', emoji: '🐟', name: 'Белая рыба', isLocal: true },
-        { id: 'beans', emoji: '🫘', name: 'Фасоль', isLocal: true },
+        { id: 'tofu_o', emoji: '🧊', name: 'Тофу', isLocal: false },
       ],
       carbs: [
         { id: 'beets', emoji: '🍠', name: 'Свёкла', isLocal: true },
@@ -83,7 +83,7 @@ export const KNOWLEDGE_BASE: Record<Phase, PhaseContent> = {
       ],
       tea_spice: [
         { id: 'dandelion_tea', emoji: '🌼', name: 'Чай из одуванчика', isLocal: true },
-        { id: 'nettle_tea', emoji: '🌿', name: 'Чай из крапивы', isLocal: true },
+        { id: 'rooibos_tea', emoji: '🍂', name: 'Чай ройбос', isLocal: false },
       ],
     },
   },
@@ -94,7 +94,7 @@ export const KNOWLEDGE_BASE: Record<Phase, PhaseContent> = {
     categories: {
       protein: [
         { id: 'turkey', emoji: '🦃', name: 'Индейка', isLocal: true },
-        { id: 'chickpeas', emoji: '🧆', name: 'Нут', isLocal: true },
+        { id: 'salmon_l', emoji: '🐟', name: 'Лосось', isLocal: false },
       ],
       carbs: [
         { id: 'buckwheat_l', emoji: '🌾', name: 'Гречка', isLocal: true },
@@ -106,7 +106,7 @@ export const KNOWLEDGE_BASE: Record<Phase, PhaseContent> = {
       ],
       tea_spice: [
         { id: 'chamomile_tea', emoji: '🌼', name: 'Ромашковый чай', isLocal: true },
-        { id: 'cinnamon_tea', emoji: '🍂', name: 'Чай с корицей', isLocal: true },
+        { id: 'turmeric_tea_l', emoji: '🟡', name: 'Чай с куркумой', isLocal: false },
       ],
     },
   },
