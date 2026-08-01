@@ -1,10 +1,11 @@
 import { View, ScrollView } from 'react-native';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { PhaseCard } from '@/components/PhaseCard';
 import { SymptomCheckIn } from '@/components/SymptomCheckIn';
 import { PlateBuilder } from '@/components/PlateBuilder';
 import { calculatePhase } from '@/engine/phaseEngine';
 import { getRepositories } from '@/db/client';
+import { scheduleNotifications } from '@/notifications/scheduler';
 import type { SymptomTag } from '@/types';
 
 // Uses the UTC calendar date, matching how every other stored date (cycle
@@ -23,6 +24,10 @@ export default function DashboardScreen() {
   const [selectedSymptoms, setSelectedSymptoms] = useState<SymptomTag[]>([]);
 
   const phaseResult = useMemo(() => calculatePhase(profile, cycleHistory), [profile, cycleHistory]);
+
+  useEffect(() => {
+    scheduleNotifications(phaseResult);
+  }, [phaseResult.cycleDay, phaseResult.phase, phaseResult.isApproximate]);
 
   function saveSymptoms() {
     repos.symptomLog.add(todayIso(), selectedSymptoms);
