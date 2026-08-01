@@ -22,4 +22,24 @@ describe('cycleEntryRepo', () => {
     repo.add('2026-07-27');
     expect(repo.getAll()).toHaveLength(3);
   });
+
+  describe('addIfAbsent', () => {
+    it('inserts and returns a new entry when none exists for that date', () => {
+      const repo = createCycleEntryRepo(createInMemoryStore<CycleEntry>());
+      const entry = repo.addIfAbsent('2026-07-20');
+      expect(entry).toEqual({ id: 1, startDate: '2026-07-20' });
+      expect(repo.getAll()).toEqual([{ id: 1, startDate: '2026-07-20' }]);
+    });
+
+    it('does not insert a second row when an entry already exists for that date', () => {
+      const repo = createCycleEntryRepo(createInMemoryStore<CycleEntry>());
+      const first = repo.add('2026-07-20');
+
+      const result = repo.addIfAbsent('2026-07-20');
+
+      expect(result).toEqual(first);
+      expect(repo.getAll()).toEqual([{ id: 1, startDate: '2026-07-20' }]);
+      expect(repo.getAll()).toHaveLength(1);
+    });
+  });
 });

@@ -50,7 +50,7 @@ export function Dashboard({ profile }: DashboardProps) {
   }
 
   function logPeriodStart() {
-    repos.cycleEntry.add(todayIso());
+    repos.cycleEntry.addIfAbsent(todayIso());
     setCycleHistory(repos.cycleEntry.getAll());
   }
 

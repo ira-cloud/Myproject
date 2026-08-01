@@ -42,6 +42,17 @@ describe('Dashboard', () => {
     expect(cycleEntry.getAll()).toEqual([{ id: 1, startDate: today() }]);
   });
 
+  it('does not create a second cycle entry when the user presses the button twice the same day', () => {
+    const { cycleEntry } = setUpRepos();
+    render(<Dashboard profile={profile} />);
+
+    fireEvent.press(screen.getByTestId('log-period-start-button'));
+    fireEvent.press(screen.getByTestId('log-period-start-button'));
+
+    expect(cycleEntry.getAll()).toEqual([{ id: 1, startDate: today() }]);
+    expect(cycleEntry.getAll()).toHaveLength(1);
+  });
+
   it('re-renders the phase card off the newly logged cycle start', () => {
     setUpRepos();
     render(<Dashboard profile={profile} />);
