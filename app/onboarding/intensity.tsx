@@ -13,7 +13,8 @@ export default function IntensityScreen() {
   }>();
 
   function handleSubmit(intensity: Intensity) {
-    getRepositories().userProfile.save({
+    const repos = getRepositories();
+    repos.userProfile.save({
       lastPeriodStart: params.lastPeriodStart,
       avgCycleLength: Number(params.avgCycleLength),
       avgPeriodLength: Number(params.avgPeriodLength),
@@ -21,6 +22,13 @@ export default function IntensityScreen() {
       intensity,
       cycleLengthIsEstimate: params.cycleLengthIsEstimate === 'true',
     });
+    // Seed the first real cycle_entry row from the date the user just gave us.
+    // Without it the cycle_entry table stays empty forever, and the rolling
+    // average / irregular-cycle detection (3+ entries) and pattern recognition
+    // (2+ entries) can never turn on.
+    if (repos.cycleEntry.getAll().length === 0) {
+      repos.cycleEntry.add(params.lastPeriodStart);
+    }
     router.replace('/dashboard');
   }
   return <IntensityForm onSubmit={handleSubmit} />;

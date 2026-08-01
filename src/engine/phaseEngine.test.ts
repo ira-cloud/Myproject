@@ -1,4 +1,4 @@
-import { calculatePhase } from '@/engine/phaseEngine';
+import { calculatePhase, getPhaseBoundaries } from '@/engine/phaseEngine';
 import type { CycleEntry, UserProfile } from '@/types';
 
 const baseProfile: UserProfile = {
@@ -78,5 +78,49 @@ describe('calculatePhase', () => {
     ];
     const result = calculatePhase(estimateProfile, history, new Date('2026-05-28'));
     expect(result.isApproximate).toBe(false);
+  });
+});
+
+// Extracted so the notification scheduler can reuse the exact same boundaries
+// calculatePhase uses, instead of its own hardcoded 28-day table.
+describe('getPhaseBoundaries', () => {
+  it('returns the reference boundaries for a 28-day / 5-day-period cycle', () => {
+    expect(getPhaseBoundaries(baseProfile, [])).toEqual({
+      menstrualEnd: 5,
+      follicularEnd: 12,
+      ovulatoryEnd: 15,
+      cycleLength: 28,
+    });
+  });
+
+  it('scales the later boundaries to a longer cycle', () => {
+    expect(getPhaseBoundaries({ ...baseProfile, avgCycleLength: 32 }, [])).toEqual({
+      menstrualEnd: 5,
+      follicularEnd: 13,
+      ovulatoryEnd: 17,
+      cycleLength: 32,
+    });
+  });
+
+  it('prefers the rolling average of the logged history over the onboarding guess', () => {
+    const history: CycleEntry[] = [
+      { id: 1, startDate: '2026-04-01' },
+      { id: 2, startDate: '2026-05-03' }, // 32-day gap
+      { id: 3, startDate: '2026-06-04' }, // 32-day gap
+    ];
+    expect(getPhaseBoundaries(baseProfile, history).cycleLength).toBe(32);
+  });
+
+  it('agrees with the phase calculatePhase reports on the boundary days', () => {
+    const boundaries = getPhaseBoundaries(baseProfile, []);
+    const on = (day: number) =>
+      calculatePhase(baseProfile, [], new Date(`2026-07-${String(day).padStart(2, '0')}`)).phase;
+
+    expect(on(boundaries.menstrualEnd)).toBe('menstrual');
+    expect(on(boundaries.menstrualEnd + 1)).toBe('follicular');
+    expect(on(boundaries.follicularEnd)).toBe('follicular');
+    expect(on(boundaries.follicularEnd + 1)).toBe('ovulatory');
+    expect(on(boundaries.ovulatoryEnd)).toBe('ovulatory');
+    expect(on(boundaries.ovulatoryEnd + 1)).toBe('luteal');
   });
 });
