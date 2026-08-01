@@ -28,6 +28,10 @@ export const KNOWLEDGE_BASE: Record<Phase, PhaseContent> = {
         { id: 'beef_liver', emoji: '🥩', name: 'Говяжья печень', isLocal: true, isVegetarian: false },
         { id: 'lentils', emoji: '🫘', name: 'Чечевица', isLocal: true, isVegetarian: true },
         { id: 'salmon', emoji: '🐟', name: 'Лосось', isLocal: false, isVegetarian: false },
+        // Тофу добавлено, чтобы после вегетарианской фильтрации оставался
+        // международный белковый вариант (иначе оставалась бы одна чечевица).
+        // Богат железом, что соответствует акценту фазы.
+        { id: 'tofu_m', emoji: '🧊', name: 'Тофу', isLocal: false, isVegetarian: true },
       ],
       carbs: [
         { id: 'buckwheat_m', emoji: '🌾', name: 'Гречка', isLocal: true, isVegetarian: true },
@@ -49,7 +53,7 @@ export const KNOWLEDGE_BASE: Record<Phase, PhaseContent> = {
       'Эстроген растёт, энергия и метаболизм ускоряются — организму хорошо с лёгкими белками и свежими овощами.',
     categories: {
       protein: [
-        { id: 'eggs', emoji: '🥚', name: 'Яйца', isLocal: true, isVegetarian: false },
+        { id: 'eggs', emoji: '🥚', name: 'Яйца', isLocal: true, isVegetarian: true },
         { id: 'chicken', emoji: '🍗', name: 'Курица', isLocal: true, isVegetarian: false },
         { id: 'tofu', emoji: '🧊', name: 'Тофу', isLocal: false, isVegetarian: true },
       ],
@@ -75,6 +79,10 @@ export const KNOWLEDGE_BASE: Record<Phase, PhaseContent> = {
       protein: [
         { id: 'white_fish', emoji: '🐟', name: 'Белая рыба', isLocal: true, isVegetarian: false },
         { id: 'tofu_o', emoji: '🧊', name: 'Тофу', isLocal: false, isVegetarian: true },
+        // Фасоль добавлена, чтобы после вегетарианской фильтрации оставался
+        // локальный белковый вариант (иначе оставалось бы только тофу).
+        // Клетчатка бобовых поддерживает вывод избытка эстрогена в этой фазе.
+        { id: 'beans_o', emoji: '🫘', name: 'Фасоль', isLocal: true, isVegetarian: true },
       ],
       carbs: [
         { id: 'beets', emoji: '🟣', name: 'Свёкла', isLocal: true, isVegetarian: true },
@@ -102,6 +110,10 @@ export const KNOWLEDGE_BASE: Record<Phase, PhaseContent> = {
         // белковый вариант (индейка и лосось отфильтровываются). Он же —
         // хороший источник B6 и магния, на которые опирается эта фаза.
         { id: 'chickpeas_l', emoji: '🫛', name: 'Нут', isLocal: true, isVegetarian: true },
+        // Тофу добавлено, чтобы после вегетарианской фильтрации оставался
+        // международный белковый вариант (иначе оставался бы только нут).
+        // Хороший источник магния, на который опирается эта фаза.
+        { id: 'tofu_l', emoji: '🧊', name: 'Тофу', isLocal: false, isVegetarian: true },
       ],
       carbs: [
         { id: 'buckwheat_l', emoji: '🌾', name: 'Гречка', isLocal: true, isVegetarian: true },

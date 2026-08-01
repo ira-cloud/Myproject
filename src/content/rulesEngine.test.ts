@@ -43,8 +43,8 @@ describe('getRecommendation', () => {
     }
 
     it('drops non-vegetarian proteins when the user selected вегетарианство', () => {
-      expect(proteinIds('menstrual')).toEqual(['beef_liver', 'lentils', 'salmon']);
-      expect(proteinIds('menstrual', ['vegetarian'])).toEqual(['lentils']);
+      expect(proteinIds('menstrual')).toEqual(['beef_liver', 'lentils', 'salmon', 'tofu_m']);
+      expect(proteinIds('menstrual', ['vegetarian'])).toEqual(['lentils', 'tofu_m']);
     });
 
     it('leaves the protein list alone when no restrictions are passed at all', () => {
@@ -60,6 +60,16 @@ describe('getRecommendation', () => {
     it('never leaves a vegetarian user with an empty protein category in any phase', () => {
       for (const phase of ALL_PHASES) {
         expect(proteinIds(phase, ['vegetarian']).length).toBeGreaterThan(0);
+      }
+    });
+
+    it('keeps 2+ vegetarian protein options mixing local and international in every phase', () => {
+      for (const phase of ALL_PHASES) {
+        const vegetarianOptions = getRecommendation(phase, [], ['vegetarian'])
+          .categories.find((c) => c.key === 'protein')!.options;
+        expect(vegetarianOptions.length).toBeGreaterThanOrEqual(2);
+        expect(vegetarianOptions.some((o) => o.isLocal)).toBe(true);
+        expect(vegetarianOptions.some((o) => !o.isLocal)).toBe(true);
       }
     });
 
