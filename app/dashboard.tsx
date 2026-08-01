@@ -2,6 +2,7 @@ import { View, ScrollView } from 'react-native';
 import { useMemo, useState } from 'react';
 import { PhaseCard } from '@/components/PhaseCard';
 import { SymptomCheckIn } from '@/components/SymptomCheckIn';
+import { PlateBuilder } from '@/components/PlateBuilder';
 import { calculatePhase } from '@/engine/phaseEngine';
 import { getRepositories } from '@/db/client';
 import type { SymptomTag } from '@/types';
@@ -32,6 +33,7 @@ export default function DashboardScreen() {
       <View className="p-4">
         <PhaseCard result={phaseResult} />
         <SymptomCheckIn selected={selectedSymptoms} onChange={setSelectedSymptoms} onSave={saveSymptoms} />
+        <PlateBuilder phase={phaseResult.phase} symptoms={selectedSymptoms} />
       </View>
     </ScrollView>
   );
