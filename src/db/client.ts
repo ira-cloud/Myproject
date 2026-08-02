@@ -8,10 +8,9 @@ import {
   SETTINGS_COLUMNS,
 } from '@/db/schema';
 import { createUserProfileRepo, type ProfileRow } from '@/db/userProfileRepo';
-import { createCycleEntryRepo } from '@/db/cycleEntryRepo';
+import { createCycleEntryRepo, type CycleEntryRow } from '@/db/cycleEntryRepo';
 import { createSymptomLogRepo, type LogRow } from '@/db/symptomLogRepo';
 import { createSettingsRepo, type SettingRow } from '@/db/settingsRepo';
-import type { CycleEntry } from '@/types';
 
 let cached: ReturnType<typeof buildRepositories> | null = null;
 
@@ -21,7 +20,7 @@ function buildRepositories() {
 
   return {
     userProfile: createUserProfileRepo(createSqliteStore<ProfileRow>(db, 'user_profile', USER_PROFILE_COLUMNS)),
-    cycleEntry: createCycleEntryRepo(createSqliteStore<CycleEntry>(db, 'cycle_entry', CYCLE_ENTRY_COLUMNS)),
+    cycleEntry: createCycleEntryRepo(createSqliteStore<CycleEntryRow>(db, 'cycle_entry', CYCLE_ENTRY_COLUMNS)),
     symptomLog: createSymptomLogRepo(createSqliteStore<LogRow>(db, 'symptom_log', SYMPTOM_LOG_COLUMNS)),
     settings: createSettingsRepo(createSqliteStore<SettingRow>(db, 'settings', SETTINGS_COLUMNS)),
   };

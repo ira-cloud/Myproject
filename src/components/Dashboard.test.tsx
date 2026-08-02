@@ -1,10 +1,10 @@
 import { render, fireEvent, screen } from '@testing-library/react-native';
 import { Dashboard } from '@/components/Dashboard';
 import { createInMemoryStore } from '@/db/inMemoryStore';
-import { createCycleEntryRepo } from '@/db/cycleEntryRepo';
+import { createCycleEntryRepo, type CycleEntryRow } from '@/db/cycleEntryRepo';
 import { createSymptomLogRepo, type LogRow } from '@/db/symptomLogRepo';
 import { getRepositories } from '@/db/client';
-import type { CycleEntry, UserProfile } from '@/types';
+import type { UserProfile } from '@/types';
 
 jest.mock('@/db/client', () => ({ getRepositories: jest.fn() }));
 jest.mock('@/notifications/scheduler', () => ({ scheduleNotifications: jest.fn() }));
@@ -20,7 +20,7 @@ const profile: UserProfile = {
 };
 
 function setUpRepos() {
-  const cycleEntry = createCycleEntryRepo(createInMemoryStore<CycleEntry>());
+  const cycleEntry = createCycleEntryRepo(createInMemoryStore<CycleEntryRow>());
   const symptomLog = createSymptomLogRepo(createInMemoryStore<LogRow>());
   (getRepositories as jest.Mock).mockReturnValue({ cycleEntry, symptomLog });
   return { cycleEntry, symptomLog };
