@@ -1,4 +1,5 @@
-import { View, Text, Pressable } from 'react-native';
+import { Text, Pressable } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 interface DisclaimerGateProps {
   onAccept: () => void;
@@ -9,7 +10,7 @@ const DISCLAIMER_TEXT =
 
 export function DisclaimerGate({ onAccept }: DisclaimerGateProps) {
   return (
-    <View className="flex-1 items-center justify-center p-6 bg-white">
+    <SafeAreaView className="flex-1 items-center justify-center p-6 bg-white">
       <Text className="text-lg font-semibold mb-4 text-center">Прежде чем начать</Text>
       <Text testID="disclaimer-text" className="text-base text-gray-700 mb-8 text-center">
         {DISCLAIMER_TEXT}
@@ -17,6 +18,6 @@ export function DisclaimerGate({ onAccept }: DisclaimerGateProps) {
       <Pressable testID="accept-button" onPress={onAccept} className="bg-emerald-500 rounded-full px-8 py-3">
         <Text className="text-white font-semibold">Принять и продолжить</Text>
       </Pressable>
-    </View>
+    </SafeAreaView>
   );
 }

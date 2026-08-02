@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { View, Text, Pressable } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 interface DietFormProps {
   onSubmit: (restrictions: string[]) => void;
@@ -19,7 +20,7 @@ export function DietForm({ onSubmit }: DietFormProps) {
   }
 
   return (
-    <View className="flex-1 p-6 bg-white">
+    <SafeAreaView className="flex-1 p-6 bg-white">
       <Text className="text-lg font-semibold mb-4">Есть ли пищевые ограничения?</Text>
       <View className="gap-2 mb-8">
         {OPTIONS.map((opt) => (
@@ -36,6 +37,6 @@ export function DietForm({ onSubmit }: DietFormProps) {
       <Pressable testID="submit-button" onPress={() => onSubmit(selected)} className="bg-emerald-500 rounded-full px-8 py-3 self-start">
         <Text className="text-white font-semibold">Далее</Text>
       </Pressable>
-    </View>
+    </SafeAreaView>
   );
 }

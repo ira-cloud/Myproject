@@ -1,4 +1,5 @@
 import { View, Text, Pressable, ScrollView } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useEffect, useMemo, useState } from 'react';
 import { PhaseCard } from '@/components/PhaseCard';
 import { SymptomCheckIn } from '@/components/SymptomCheckIn';
@@ -55,28 +56,30 @@ export function Dashboard({ profile }: DashboardProps) {
   }
 
   return (
-    <ScrollView className="flex-1 bg-white">
-      <View className="p-4">
-        <PhaseCard result={phaseResult} />
-        <Pressable
-          testID="log-period-start-button"
-          onPress={logPeriodStart}
-          className="bg-rose-500 rounded-full px-6 py-2 self-start mb-4"
-        >
-          <Text className="text-white font-semibold">Месячные начались сегодня</Text>
-        </Pressable>
-        <SymptomCheckIn
-          selected={selectedSymptoms}
-          onChange={setSelectedSymptoms}
-          onSave={saveSymptoms}
-        />
-        <PlateBuilder
-          phase={phaseResult.phase}
-          symptoms={selectedSymptoms}
-          dietaryRestrictions={profile.dietaryRestrictions}
-        />
-        <PatternInsight patterns={patterns} />
-      </View>
-    </ScrollView>
+    <SafeAreaView className="flex-1 bg-white" edges={['top']}>
+      <ScrollView className="flex-1">
+        <View className="p-4">
+          <PhaseCard result={phaseResult} />
+          <Pressable
+            testID="log-period-start-button"
+            onPress={logPeriodStart}
+            className="bg-rose-500 rounded-full px-6 py-2 self-start mb-4"
+          >
+            <Text className="text-white font-semibold">Месячные начались сегодня</Text>
+          </Pressable>
+          <SymptomCheckIn
+            selected={selectedSymptoms}
+            onChange={setSelectedSymptoms}
+            onSave={saveSymptoms}
+          />
+          <PlateBuilder
+            phase={phaseResult.phase}
+            symptoms={selectedSymptoms}
+            dietaryRestrictions={profile.dietaryRestrictions}
+          />
+          <PatternInsight patterns={patterns} />
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }

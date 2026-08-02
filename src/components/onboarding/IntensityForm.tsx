@@ -1,4 +1,5 @@
 import { View, Text, Pressable } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import type { Intensity } from '@/types';
 
 interface IntensityFormProps {
@@ -13,7 +14,7 @@ const OPTIONS: { id: Intensity; label: string; hint: string }[] = [
 
 export function IntensityForm({ onSubmit }: IntensityFormProps) {
   return (
-    <View className="flex-1 p-6 bg-white">
+    <SafeAreaView className="flex-1 p-6 bg-white">
       <Text className="text-lg font-semibold mb-4">В каком темпе хочешь заботиться о себе?</Text>
       <View className="gap-3">
         {OPTIONS.map((opt) => (
@@ -28,6 +29,6 @@ export function IntensityForm({ onSubmit }: IntensityFormProps) {
           </Pressable>
         ))}
       </View>
-    </View>
+    </SafeAreaView>
   );
 }

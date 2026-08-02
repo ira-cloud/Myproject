@@ -1,11 +1,28 @@
 {
   "expo": {
     "name": "Cycle & Nutrient Syncing",
-    "slug": "cycle-nutrient-syncing",
+    "slug": "irinacicle",
     "version": "0.1.0",
     "orientation": "portrait",
     "scheme": "cyclesync",
-    "ios": { "bundleIdentifier": "com.iracloud.cyclesync", "supportsTablet": false },
-    "plugins": ["expo-router"]
+    "ios": {
+      "bundleIdentifier": "com.iracloud.cyclesync",
+      "supportsTablet": false,
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    },
+    "plugins": [
+      "expo-router"
+    ],
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "695159d5-4202-456b-81f1-7f6e9ef15dc8"
+      }
+    },
+    "owner": "irinagrs-team"
   }
 }
